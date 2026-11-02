@@ -45,7 +45,9 @@ export default function ProjectsIndex() {
                         description="Manage the projects displayed on the Fabia and Ramos portfolios."
                     />
                     <Button asChild>
-                        <Link href={ProjectController.create()}>Add project</Link>
+                        <Link href={ProjectController.create()}>
+                            Add project
+                        </Link>
                     </Button>
                 </div>
 
@@ -61,7 +63,7 @@ export default function ProjectsIndex() {
                 {projects.data.length === 0 ? (
                     <div className="rounded-xl border border-dashed p-10 text-center">
                         <p className="font-medium">No projects yet</p>
-                        <p className="text-muted-foreground mt-1 text-sm">
+                        <p className="mt-1 text-sm text-muted-foreground">
                             Create a project to show it on a portfolio.
                         </p>
                     </div>
@@ -80,21 +82,30 @@ export default function ProjectsIndex() {
                                             className="h-16 w-24 rounded-md border object-cover"
                                         />
                                     ) : (
-                                        <div className="bg-muted h-16 w-24 rounded-md" />
+                                        <div className="h-16 w-24 rounded-md bg-muted" />
                                     )}
                                     <div className="min-w-0 flex-1">
-                                        <h2 className="font-medium">{project.title}</h2>
-                                        <p className="text-muted-foreground mt-1 line-clamp-2 text-sm">
+                                        <h2 className="font-medium">
+                                            {project.title}
+                                        </h2>
+                                        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
                                             {project.description}
                                         </p>
                                         <p className="mt-1 text-xs capitalize">
-                                            {project.portfolio} · Order {project.display_order}
+                                            {project.portfolio} · Order{' '}
+                                            {project.display_order}
                                         </p>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <Button variant="outline" size="sm" asChild>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            asChild
+                                        >
                                             <Link
-                                                href={ProjectController.edit(project.id)}
+                                                href={ProjectController.edit(
+                                                    project.id,
+                                                )}
                                             >
                                                 Edit
                                             </Link>
@@ -113,8 +124,9 @@ export default function ProjectsIndex() {
                                                 }
 
                                                 router.delete(
-                                                    ProjectController.destroy(project.id)
-                                                        .url,
+                                                    ProjectController.destroy(
+                                                        project.id,
+                                                    ).url,
                                                 );
                                             }}
                                         >
@@ -143,7 +155,7 @@ export default function ProjectsIndex() {
                         ) : (
                             <span
                                 key={`${link.label}-${index}`}
-                                className="text-muted-foreground rounded-md border px-3 py-2 text-sm"
+                                className="rounded-md border px-3 py-2 text-sm text-muted-foreground"
                             >
                                 {link.label
                                     .replace('&laquo;', '‹')

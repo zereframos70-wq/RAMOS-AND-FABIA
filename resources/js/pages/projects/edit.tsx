@@ -31,7 +31,9 @@ export default function EditProject({ project }: { project: Project }) {
                         description={`Update ${project.title}.`}
                     />
                     <Button variant="outline" asChild>
-                        <Link href={ProjectController.index()}>Back to projects</Link>
+                        <Link href={ProjectController.index()}>
+                            Back to projects
+                        </Link>
                     </Button>
                 </div>
                 <div className="max-w-3xl rounded-xl border bg-card p-6">

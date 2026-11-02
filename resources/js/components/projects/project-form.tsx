@@ -60,7 +60,11 @@ export default function ProjectForm({
     }
 
     return (
-        <form onSubmit={submit} className="space-y-6" encType="multipart/form-data">
+        <form
+            onSubmit={submit}
+            className="space-y-6"
+            encType="multipart/form-data"
+        >
             <div className="grid gap-2">
                 <Label htmlFor="portfolio">Show on portfolio</Label>
                 <select
@@ -70,10 +74,11 @@ export default function ProjectForm({
                     onChange={(event) =>
                         form.setData(
                             'portfolio',
-                            event.target.value as ProjectFormValues['portfolio'],
+                            event.target
+                                .value as ProjectFormValues['portfolio'],
                         )
                     }
-                    className="border-input bg-background h-9 rounded-md border px-3 text-sm shadow-xs"
+                    className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-xs"
                     required
                 >
                     <option value="fabia">Fabia</option>
@@ -89,7 +94,9 @@ export default function ProjectForm({
                     id="title"
                     name="title"
                     value={form.data.title}
-                    onChange={(event) => form.setData('title', event.target.value)}
+                    onChange={(event) =>
+                        form.setData('title', event.target.value)
+                    }
                     maxLength={120}
                     required
                 />
@@ -108,7 +115,7 @@ export default function ProjectForm({
                     minLength={20}
                     maxLength={2000}
                     rows={5}
-                    className="border-input bg-background placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 w-full rounded-md border px-3 py-2 text-sm shadow-xs outline-none focus-visible:ring-[3px]"
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                     required
                 />
                 <InputError message={form.errors.description} />
@@ -126,7 +133,7 @@ export default function ProjectForm({
                     placeholder="React, Laravel, MySQL"
                     required
                 />
-                <p className="text-muted-foreground text-xs">
+                <p className="text-xs text-muted-foreground">
                     Separate each technology with a comma (up to 10).
                 </p>
                 <InputError message={form.errors.tech_stack} />
@@ -177,10 +184,13 @@ export default function ProjectForm({
                         type="file"
                         accept=".jpg,.jpeg,.png,.webp"
                         onChange={(event) =>
-                            form.setData('image', event.target.files?.[0] ?? null)
+                            form.setData(
+                                'image',
+                                event.target.files?.[0] ?? null,
+                            )
                         }
                     />
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-xs text-muted-foreground">
                         JPG, PNG, or WebP; maximum 2 MB.
                     </p>
                     <InputError message={form.errors.image} />
@@ -216,7 +226,10 @@ export default function ProjectForm({
                             max={9999}
                             value={form.data.display_order}
                             onChange={(event) =>
-                                form.setData('display_order', event.target.value)
+                                form.setData(
+                                    'display_order',
+                                    event.target.value,
+                                )
                             }
                             required
                         />
@@ -224,17 +237,17 @@ export default function ProjectForm({
                     </div>
                 </div>
             </div>
-            <div className= "grid gap-2">
+            <div className="grid gap-2">
                 <Label htmlFor="project_note">Project Note</Label>
                 <input
-                id="project_note"
-                name="project_note"
-                value={form.data.project_note}
-                onChange={(event) =>
-                    form.setData('project_note', event.target.value)
-                }
-                maxLength={100}
-                placeholder="Optional"
+                    id="project_note"
+                    name="project_note"
+                    value={form.data.project_note}
+                    onChange={(event) =>
+                        form.setData('project_note', event.target.value)
+                    }
+                    maxLength={100}
+                    placeholder="Optional"
                 />
                 <InputError message={form.errors.project_note} />
             </div>

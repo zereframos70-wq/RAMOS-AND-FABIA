@@ -72,9 +72,14 @@ export function initializeFabiaPortfolio(root) {
 
     $('#heroImg').src = profilePhoto;
     $('#tech').innerHTML = technical
-        .map(([name, description]) => `<div class="skill">${name}<small>${description}</small></div>`)
+        .map(
+            ([name, description]) =>
+                `<div class="skill">${name}<small>${description}</small></div>`,
+        )
         .join('');
-    $('#soft').innerHTML = soft.map((name) => `<div class="skill">${name}</div>`).join('');
+    $('#soft').innerHTML = soft
+        .map((name) => `<div class="skill">${name}</div>`)
+        .join('');
     const projects = JSON.parse($('#projectGrid').dataset.projects || '[]');
     $('#projectGrid').replaceChildren(
         ...projects.map((project) => {
@@ -89,7 +94,11 @@ export function initializeFabiaPortfolio(root) {
                 'chip',
                 `${project.portfolio === 'both' ? 'Shared' : project.portfolio} project`,
             );
-            const title = makeElement('h3', 'project-title font-semibold mt-3 text-lg', project.title);
+            const title = makeElement(
+                'h3',
+                'project-title font-semibold mt-3 text-lg',
+                project.title,
+            );
             const description = makeElement(
                 'p',
                 'project-description text-xs text-slate-400 mt-2 leading-relaxed',
@@ -102,7 +111,10 @@ export function initializeFabiaPortfolio(root) {
                       `Note: ${project.project_note}`,
                   )
                 : null;
-            const tags = makeElement('div', 'project-tags flex flex-wrap gap-1.5 mt-3');
+            const tags = makeElement(
+                'div',
+                'project-tags flex flex-wrap gap-1.5 mt-3',
+            );
 
             if (project.image_url) {
                 const image = makeElement(
@@ -130,7 +142,9 @@ export function initializeFabiaPortfolio(root) {
                 const link = makeElement(
                     'a',
                     'mt-4 inline-flex text-xs text-violet-300 hover:text-white',
-                    project.project_url ? 'View project ↗' : 'View repository ↗',
+                    project.project_url
+                        ? 'View project ↗'
+                        : 'View repository ↗',
                 );
                 link.href = project.project_url || project.repository_url;
                 link.target = '_blank';
@@ -170,18 +184,27 @@ export function initializeFabiaPortfolio(root) {
         siteHeader.toggleAttribute('inert', open);
         main.toggleAttribute('inert', open);
         toggle.setAttribute('aria-expanded', String(open));
-        toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        toggle.setAttribute(
+            'aria-label',
+            open ? 'Close navigation menu' : 'Open navigation menu',
+        );
         document.body.style.overflow = open ? 'hidden' : originalBodyOverflow;
 
         if (open) {
             closeDrawer.focus();
         } else {
-            const focusTarget = toggle.getClientRects().length ? toggle : $('#menu a');
+            const focusTarget = toggle.getClientRects().length
+                ? toggle
+                : $('#menu a');
             focusTarget.focus();
         }
     };
 
-    toggle.addEventListener('click', () => setMenu(!drawer.classList.contains('open')), { signal });
+    toggle.addEventListener(
+        'click',
+        () => setMenu(!drawer.classList.contains('open')),
+        { signal },
+    );
     closeDrawer.addEventListener('click', () => setMenu(false), { signal });
     drawerBackdrop.addEventListener('click', () => setMenu(false), { signal });
     drawer.addEventListener(
@@ -207,7 +230,11 @@ export function initializeFabiaPortfolio(root) {
             }
 
             if (event.key === 'Tab') {
-                const focusable = [...drawer.querySelectorAll('a[href], button:not([disabled])')];
+                const focusable = [
+                    ...drawer.querySelectorAll(
+                        'a[href], button:not([disabled])',
+                    ),
+                ];
                 const first = focusable[0];
                 const last = focusable[focusable.length - 1];
 
@@ -238,13 +265,20 @@ export function initializeFabiaPortfolio(root) {
         (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    links.forEach((link) => link.classList.toggle('active', link.hash === `#${entry.target.id}`));
+                    links.forEach((link) =>
+                        link.classList.toggle(
+                            'active',
+                            link.hash === `#${entry.target.id}`,
+                        ),
+                    );
                 }
             });
         },
         { rootMargin: '-45% 0px -50% 0px' },
     );
-    root.querySelectorAll('main section').forEach((section) => sectionObserver.observe(section));
+    root.querySelectorAll('main section').forEach((section) =>
+        sectionObserver.observe(section),
+    );
 
     const aboutSection = $('#about');
     const aboutRevealObserver = new IntersectionObserver(
@@ -302,7 +336,10 @@ export function initializeFabiaPortfolio(root) {
 
                 showCopyEmailStatus('Email address copied!', true);
             } catch {
-                showCopyEmailStatus('Could not copy. Please copy the email link.', false);
+                showCopyEmailStatus(
+                    'Could not copy. Please copy the email link.',
+                    false,
+                );
             }
         },
         { signal },
@@ -317,21 +354,24 @@ export function initializeFabiaPortfolio(root) {
             event.preventDefault();
             const fields = [...form.querySelectorAll('[required]')];
             const invalidFields = fields.filter((field) => {
-                const valid = field.checkValidity() && field.value.trim().length > 0;
+                const valid =
+                    field.checkValidity() && field.value.trim().length > 0;
                 field.setAttribute('aria-invalid', String(!valid));
 
                 return !valid;
             });
 
             if (invalidFields.length) {
-                status.textContent = 'Please fill in all required fields with a valid email address.';
+                status.textContent =
+                    'Please fill in all required fields with a valid email address.';
                 status.className = 'text-xs min-h-4 text-pink-400';
                 invalidFields[0].focus();
 
                 return;
             }
 
-            status.textContent = 'Thank you! Your details pass validation. This demo form is not connected to email yet.';
+            status.textContent =
+                'Thank you! Your details pass validation. This demo form is not connected to email yet.';
             status.className = 'text-xs min-h-4 text-emerald-400';
             form.reset();
             fields.forEach((field) => field.removeAttribute('aria-invalid'));
@@ -343,7 +383,11 @@ export function initializeFabiaPortfolio(root) {
         (event) => {
             const field = event.target;
 
-            if (field.matches('[required]') && field.checkValidity() && field.value.trim()) {
+            if (
+                field.matches('[required]') &&
+                field.checkValidity() &&
+                field.value.trim()
+            ) {
                 field.removeAttribute('aria-invalid');
             }
         },
